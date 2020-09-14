@@ -12,7 +12,7 @@
         </div>
         <footer class="modal-footer">
           <slot name="footer">
-            <button @click="$emit('close')">Close</button>
+            <button @click="$emit('close')">취소</button>
           </slot>
         </footer>
       </div>
@@ -20,13 +20,31 @@
   </transition>
 </template>
 
+<script>
+export default {
+	props: {
+    position: {
+      type: Object,
+      required: true,
+    },
+  },
+  mounted() {
+    const btn = document.querySelector('.modal-window');
+    console.log(btn);
+    btn.style.left = `${this.position.x}px`;
+    btn.style.top = `${this.position.y + 30}px`;
+    console.log(this.position);
+  },
+}
+</script>
+
 <style lang="scss">
 .modal {
   &.modal-overlay {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
+    position: absolute;
     z-index: 30;
     top: 0;
     left: 0;
@@ -35,38 +53,39 @@
     background: rgba(0, 0, 0, 0.4);
   }
 
-  &-window {
+  .modal-window {
+    position: absolute;
+    background-color: pink;
     background: #fff;
     border-radius: 4px;
     width: 450px;
-    height: 400px;
+    // left: 8px;
+    // top: 105px;
+    // height: 400px;
     word-wrap: break-word;
-    hyphens: auto;
   }
 
-  &-header {
-    // margin-bottom: 30px;
-    padding: 20px 20px;
+  .modal-header {
+    border-bottom: 1px solid lightgray;
+    // background-color: lightcoral;
+    padding: 20px;
     height: 10px;
   }
 
-  &-content {
+  .modal-content {
+    // background-color: lightseagreen;
     position: relative;
     padding: 10px 20px;
-    height: 300px;
+    height: 200px;
     overflow-y: scroll;
   }
 
-  &-footer {
-    // background-color: royalblue;
+  .modal-footer {
+    // background-color: lightsteelblue;
+    border-top: 1px solid lightgray;
     position: relative;
-    height: 50px;
-    // background: #ccc;
-    padding: 10px;
-    margin: 10px;
-    // text-align: left;
-    bottom: 10px;
-    // right: 50px;
+    padding: 10px 20px;
+    text-align: right;
   }
 }
 
